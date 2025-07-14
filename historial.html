@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Historial de Movimientos | Almacén ABC</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      background-color: #f9fbfc;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .navbar {
+      background-color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #198754 !important;
+      letter-spacing: 0.5px;
+    }
+    .nav-link {
+      font-weight: 500;
+      color: #555 !important;
+    }
+    .nav-link:hover,
+    .nav-link.active {
+      color: #198754 !important;
+    }
+    .login-icon {
+      font-size: 1.5rem;
+      color: #555;
+      transition: color 0.3s ease;
+    }
+    .login-icon:hover {
+      color: #198754;
+    }
+    footer {
+      background-color: #effaf4;
+      padding: 2rem 0;
+      text-align: center;
+      color: #333;
+      margin-top: 4rem;
+    }
+    .social-icons a {
+      color: #198754;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    .social-icons a:hover {
+      color: #0f5132;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <i class="bi bi-box-seam-fill me-2"></i>Almacén <span style="color:#0f5132;">ABC</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav align-items-center">
+        <a class="nav-link" href="index.html">Inicio</a>
+<a class="nav-link" href="consulta.html">Consultar productos</a>
+<a class="nav-link" href="ingreso.html">Ingresar productos</a>
+<a class="nav-link active" href="historial.html">Historial de movimientos</a>
+
+        <li class="nav-item"><a class="nav-link" href="#" id="btnIdioma"><i class="bi bi-translate"></i></a></li>
+        <li class="nav-item dropdown" id="dropdownLogin">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><span class="dropdown-item-text fw-bold" id="adminName">Admin</span></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person-lines-fill"></i> Perfil</a></li>
+            <li><a class="dropdown-item logout-icon" href="#" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+          </ul>
+        </li>
+        <li class="nav-item ms-3" id="loginButton">
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person-circle login-icon"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Contenido principal -->
+<div class="container mt-5">
+  <div class="card p-4 shadow-sm rounded-4">
+    <h2 class="text-center mb-4 text-success">Historial de Movimientos</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle text-center">
+        <thead class="table-success">
+          <tr>
+            <th>Tipo</th>
+            <th>Producto</th>
+            <th>Fecha</th>
+            <th>Realizado por</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-movimientos">
+          <tr><td colspan="4">Cargando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p class="mb-2">© 2025 <strong>Almacén ABC</strong> — Todos los derechos reservados</p>
+    <div class="social-icons">
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+      <a href="#"><i class="bi bi-twitter"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- Modales -->
+<div class="modal fade" id="loginModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">Iniciar Sesión</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="loginForm">
+          <div class="mb-3">
+            <label for="correo" class="form-label">Correo</label>
+            <input type="email" class="form-control" id="correo" required />
+          </div>
+          <div class="mb-3">
+            <label for="contrasena" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="contrasena" required />
+          </div>
+          <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="confirmLogoutModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-header border-0">
+        <h5 class="modal-title text-danger">¿Estás seguro?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="fs-5">¿Deseas cerrar sesión?</p>
+        <div class="d-flex justify-content-center gap-3 mt-4">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirmLogout">Sí, cerrar sesión</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/datos.js"></script>
+<script src="assets/js/negocio.js"></script>
+
+
+  <script>
+  $(document).ready(function () {
+    function cargarHistorial() {
+      const movimientos = [
+        {
+          tipo: 'Entrada',
+          nombre_producto: 'Laptop HP',
+          fecha: new Date(),
+          realizado_por: 'Admin1'
+        },
+        {
+          tipo: 'Salida',
+          nombre_producto: 'Mouse Logitech',
+          fecha: new Date(),
+          realizado_por: 'Admin2'
+        }
+      ];
+
+      const tbody = document.getElementById('tabla-movimientos');
+      tbody.innerHTML = '';
+      movimientos.forEach(mov => {
+        const fila = `
+          <tr>
+            <td>${mov.tipo}</td>
+            <td>${mov.nombre_producto}</td>
+            <td>${new Date(mov.fecha).toLocaleString()}</td>
+            <td>${mov.realizado_por}</td>
+          </tr>`;
+        tbody.innerHTML += fila;
+      });
+    }
+
+    cargarHistorial();
+
+    const adminCorreo = localStorage.getItem('admin-user');
+    const adminNombre = localStorage.getItem('admin-name');
+
+    if (adminCorreo && adminNombre) {
+      $('#loginButton').hide();
+      $('#dropdownLogin').show();
+      $('#adminName').text(adminNombre);
+    } else {
+      $('#loginButton').show();
+      $('#dropdownLogin').hide();
+    }
+
+    $('#loginForm').on('submit', async function (e) {
+      e.preventDefault();
+      const correo = $('#correo').val();
+      const contrasena = $('#contrasena').val();
+      try {
+        const res = await fetch('/loginAdmin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ correo, contrasena })
+        });
+        const data = await res.json();
+        if (data.success) {
+          $('#loginModal').modal('hide');
+          localStorage.setItem('admin-user', correo);
+          localStorage.setItem('admin-name', data.nombreAdmin);
+          location.reload();
+        } else {
+          alert(data.mensaje);
+        }
+      } catch (err) {
+        console.error('Error en el login:', err);
+      }
+    });
+
+    $('#confirmLogout').on('click', () => {
+      localStorage.removeItem('admin-user');
+      localStorage.removeItem('admin-name');
+      location.reload();
+    });
+
+    const pares = [
+      ['Inicio', 'Home'], ['Consultar productos', 'View products'], ['Ingresar productos', 'Add products'],
+      ['Historial de movimientos', 'Movement history'], ['Perfil', 'Profile'], ['Cerrar sesión', 'Log out'],
+      ['Iniciar Sesión', 'Sign In'], ['Correo', 'Email'], ['Contraseña', 'Password'],
+      ['¿Estás seguro?', 'Are you sure?'], ['¿Deseas cerrar sesión?', 'Do you want to log out?'],
+      ['Cancelar', 'Cancel'], ['Sí, cerrar sesión', 'Yes, log out'], ['Historial de Movimientos', 'Movement History'],
+      ['Tipo', 'Type'], ['Producto', 'Product'], ['Fecha', 'Date'], ['Realizado por', 'Performed by']
+    ];
+
+    function traducir(idioma) {
+      const from = idioma === 'es' ? 1 : 0;
+      const to = idioma === 'es' ? 0 : 1;
+
+      $('[class*=nav-link], h2, p, th, .btn, .modal-title, .form-label, .fs-5, .btn-secondary, .btn-danger').each(function () {
+        const txt = $(this).text().trim();
+        for (const par of pares) {
+          if (txt === par[from]) {
+            $(this).text(par[to]);
+            break;
+          }
+        }
+      });
+    }
+
+    const idiomaGuardado = localStorage.getItem('idioma') || 'es';
+    traducir(idiomaGuardado);
+
+    $('#btnIdioma').on('click', function () {
+      const actual = localStorage.getItem('idioma') || 'es';
+      const nuevo = actual === 'es' ? 'en' : 'es';
+      localStorage.setItem('idioma', nuevo);
+      traducir(nuevo);
+    });
+  });
+</script>
+
+</body>
+</html>
